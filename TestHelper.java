@@ -25,5 +25,6 @@ public class TestHelper {
 
         methenol.printMolecule();
         methenol.printNeighbours();
+        methenol.printNextNearestNeighbours();
     }
 }

@@ -72,7 +72,7 @@ public class Molecule {
                 }
             }
             mNeighboursMap.put(i,temp);
-            temp.clear();
+            System.out.print(temp.size() + " -> size \n");
         }
     }
 
@@ -104,7 +104,7 @@ public class Molecule {
     private ArrayList<Integer> getNextNearestNeighbours(int atom){
         ArrayList<Integer> temp = new ArrayList<>();
         for (int i: mNeighboursMap.get(atom)){
-            temp.addAll(getNearestNeighbours(i));
+            temp.addAll(mNeighboursMap.get(i));
         }
         ArrayList<Integer> out = new ArrayList<>();
         for(int i: temp){
@@ -126,11 +126,21 @@ public class Molecule {
     public void printNeighbours(){
         for(int i:mNeighboursMap.keySet()){
             System.out.println("Atom-> "+i+" Neighbours / ");
-            for(int j: mNeighboursMap.get(i)){
-                System.out.print(j );
-            }
-            System.out.print("-----------------------\n");
+            System.out.print("Neighbours -> "+mNeighboursMap.get(i));
+            System.out.print("\n-----------------------\n");
         }
+    }
+
+    public void printNextNearestNeighbours(){
+        for(int i:mNextNearestMap.keySet()){
+            System.out.println("Atom-> "+i+" Next Nearest Neighbours / ");
+            System.out.print("Next Nearest Neighbours -> "+mNextNearestMap.get(i));
+            System.out.print("\n-----------------------\n");
+        }
+    }
+
+    public void getNextNeighboursCount(int Atom){
+
     }
 
 }
