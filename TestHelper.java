@@ -23,8 +23,12 @@ public class TestHelper {
         methenol.updateNextNearestNeighbours();
         System.out.println("NearestNeighboursUpdated");
 
+        methenol.updateNextNearestCountMap();
+        System.out.println("NextNearestCountUpdated");
+
         methenol.printMolecule();
         methenol.printNeighbours();
         methenol.printNextNearestNeighbours();
+        methenol.printNextNearestCount();
     }
 }

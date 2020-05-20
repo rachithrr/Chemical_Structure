@@ -1,12 +1,11 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class Molecule {
     HashMap<Integer,Atom> mAtom_map = new HashMap<>();
     HashMap<Integer,ArrayList<Integer>> mNeighboursMap = new HashMap<>();
     HashMap<Integer,ArrayList<Integer>> mNextNearestMap = new HashMap<>();
+    HashMap<Integer,Integer> mNextNearestCountMap = new HashMap<>();
 
     public Molecule() {}
 
@@ -68,11 +67,9 @@ public class Molecule {
                 if(dist < 1.5){
                     mAtom_map.get(i).addNeighbour(mAtom_map.get(j));
                     temp.add(j);
-                    System.out.println("printing "+j);
                 }
             }
             mNeighboursMap.put(i,temp);
-            System.out.print(temp.size() + " -> size \n");
         }
     }
 
@@ -139,8 +136,41 @@ public class Molecule {
         }
     }
 
-    public void getNextNeighboursCount(int Atom){
-
+    private int getNextNeighboursCount(int first,int sec){
+        int counter = 0;
+        ArrayList<Integer> temp = mNeighboursMap.get(first);
+        if(temp.contains(sec)){
+            return counter;
+        }
+        for(int i: temp){
+            ArrayList<Integer> inter = mNeighboursMap.get(i);
+            for(int j: inter){
+                if(j == sec){
+                    counter++;
+                }
+            }
+        }
+        return counter;
     }
 
+    public void updateNextNearestCountMap(){
+        int counter;
+        for(int i:mAtom_map.keySet()){
+            counter = 0;
+            for(int j: mAtom_map.keySet()){
+                if(i == j){
+                    continue;
+                }
+                counter += getNextNeighboursCount(i,j);
+            }
+            mNextNearestCountMap.put(i,counter);
+        }
+    }
+
+    public void printNextNearestCount(){
+        for(int i: mNextNearestCountMap.keySet()){
+            System.out.println("Atom -> "+i+"  NextNearestCount -> "+mNextNearestCountMap.get(i));
+            System.out.println("==========================");
+        }
+    }
 }
